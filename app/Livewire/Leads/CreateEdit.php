@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Leads;
 
-use App\Livewire\Forms\LeadForm;
+use App\Livewire\Admin\Livewire\Forms\LeadForm;
 use App\Models\Lead;
 use Livewire\Attributes\On;
 use Livewire\Component;

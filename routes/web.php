@@ -1,17 +1,8 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
 
 Route::view('/', 'welcome');
 
@@ -24,3 +15,12 @@ Route::view('profile', 'profile')
     ->name('profile');
 
 require __DIR__.'/auth.php';
+
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::resource('users', UserController::class);
+    Route::get('users/{user}/edit-role', [UserController::class, 'editRole'])->name('users.edit-role');
+    Route::post('users/{user}/update-role', [UserController::class, 'updateRole'])->name('users.update-role');
+    Route::get('/admin', [UserController::class, 'index'])->name('admin.index');
+    Route::get('/admin/permissions', [UserController::class, 'permissions'])->name('admin.permissions');
+    Route::post('users/{user}/update-permissions', [UserController::class, 'updatePermissions'])->name('users.update-permissions');
+});
